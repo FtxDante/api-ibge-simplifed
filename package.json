@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "axios": "^0.22.0",
+    "express": "^4.17.1",
+    "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  },
+  "name": "cities-of-brazil",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon api/index.js"
+  },
+  "keywords": [],
+  "author": "Paulo Sergio",
+  "license": "ISC",
+  "description": ""
+}
