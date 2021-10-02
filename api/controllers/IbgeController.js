@@ -40,19 +40,9 @@ class IbgeController{
             }
             return dataAsked;
         })
-        await this.findCityErrorByUf(uf)
+        await this.findErrorUf(uf)
         return citiesFound;
-    }
-
-
-    async findCityErrorByUf(uf){
-        if(uf.toUpperCase() !== uf){
-            throw new UfLowCase()
-        } 
-        if(uf.length !== 2){
-            throw new UfLengthError()
-        }
-    }  
+    } 
 
     async searchForCityName(queries){
         const {name} = queries;
@@ -86,18 +76,30 @@ class IbgeController{
         return citiesFound;
     }
 
-    async searchCityForState(state){
+    async searchCityForState(queries){
+        const {state} = queries;
         await this.cleanData();
         const cities = this.allCities;
         const citiesFound = await cities.filter(city =>{
             let dataAsked;
-            if(city.state == state){
+            const cityStateLowCase = (city.state.toLowerCase());
+            const stateReceveid = state.toLowerCase();
+            if(cityStateLowCase == stateReceveid){
                 dataAsked = city;
             }
             return dataAsked;
         })
         return citiesFound;
     }
+
+    async findErrorUf(uf){
+        if(uf.toUpperCase() !== uf){
+            throw new UfLowCase()
+        } 
+        if(uf.length !== 2){
+            throw new UfLengthError()
+        }
+    } 
 
     get allCities(){
         return this._allCities;

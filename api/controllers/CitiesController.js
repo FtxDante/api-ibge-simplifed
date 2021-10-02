@@ -21,12 +21,6 @@ class CitiesController {
         }
     }
 
-    static async handleError404(data){
-            if(data.length == 0){
-                throw new CitiesNotFound()
-            }
-    }
-
     static async searchByQueries(queries){
         let data;
         if(queries.hasOwnProperty('uf')){
@@ -35,12 +29,19 @@ class CitiesController {
             data = await ibgeController.searchForCityName(queries);
         }else if(queries.hasOwnProperty('region')){
             data = await ibgeController.searchForCityRegion(queries);
+        }else if(queries.hasOwnProperty('state')){
+            data = await ibgeController.searchCityForState(queries);
         }else{
             data = await ibgeController.searchAllCities();
         }
         return data;
     }
-  
+    
+    static async handleError404(data){
+        if(data.length == 0){
+            throw new CitiesNotFound()
+        }
+    }
 }
 
 module.exports = CitiesController; 
