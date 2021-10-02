@@ -1,11 +1,10 @@
 const express = require('express');
 const app = express();
-const ApiIbge = require('./services/api-ibge-service');
-const apiIbge = new ApiIbge();
+const routes = require('./routes');
 
-
-app.listen(3000, async () =>{
-    console.log('The server is running at port 3000');
-    await ApiIbge.callAxios('/municipios')
-    console.log(ApiIbge.cities);   
+routes(app);
+app.listen(3000, () =>{
+    console.log('The server is running at port 3000, please await API IBGE');  
 })
+
+
