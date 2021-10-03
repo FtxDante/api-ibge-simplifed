@@ -91,6 +91,11 @@ class IbgeController{
         return citiesFound;
     }
 
+    async searchAllCities(){
+        await this.cleanData();
+        return this.allCities;
+    }
+
     async findErrorUf(uf){
         if(uf.toUpperCase() !== uf){
             throw new UfLowCase()

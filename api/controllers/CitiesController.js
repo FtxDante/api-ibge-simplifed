@@ -9,7 +9,7 @@ class CitiesController {
         try{
             let data =  await CitiesController.searchByQueries(queries);
             await CitiesController.handleError404(data);
-            return res.status(200).send(data);
+            return res.status(200).json(data);
         }catch(error){
             let status = 500;
             console.error(error)
