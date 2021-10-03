@@ -60,7 +60,7 @@ OBS: A sigla deve está em maiúsculas e ter apenas 2 caracteres
 localhost:3000/api/city?name=[NOME]
 Exemplo:
 localhost:3000/api/city?name=São Paulo
-OBS: A API respeita acentuações, mas também pesquisa por partes.
+OBS: Pesquisa por partes, mas respeita acentos.
 ```
 
 * Pesquisar cidades por nome do estado:
@@ -69,7 +69,7 @@ OBS: A API respeita acentuações, mas também pesquisa por partes.
 localhost:3000/api/city?state=[NOME ESTADO]
 Exemplo:
 localhost:3000/api/city?state=CEARÁ
-OBS: A API respeita acentuações, mas também pesquisa por partes.
+OBS: Pesquisa por partes, mas respeita acentos.
 ```
 
 * Pesquisar cidades por região:
@@ -78,6 +78,26 @@ OBS: A API respeita acentuações, mas também pesquisa por partes.
 localhost:3000/api/city?region=[NOME ESTADO]
 Exemplo:
 localhost:3000/api/city?region=CEARÁ
-OBS: Pesquisa por partes do nome.
+OBS: Pesquisa por partes, mas respeita acentos.
 ```
+
+* Pesquisa refinada, pesquise por todos os parametros:
+
+```http
+localhost:3000/api/city?name=[NOME]&region=[REGIAO]&uf=[SIGLA]
+Exemplo:
+localhost:3000/api/city?name=Tailândia&region=Norte&uf=PA
+OBS: Pesquisa por partes, mas respeita acentos.
+```
+
+#### Comece a testar, pesquise esses nomes de cidades:
+
+1. Ressaquinha :tropical_drink:
+2. Vassouras :house:
+3. Santa Rita do Passa Quatro :four_leaf_clover:
+4. Não-Me-Toque :x:
+5. Nova Iorque :city_sunrise:
+6. Tailândia :world_map:
+7. Xique-Xique :money_mouth_face:
+8. Feliz Natal :christmas_tree:
 
