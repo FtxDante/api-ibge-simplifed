@@ -6,7 +6,6 @@ callAxios().then(apiAnswer =>{
     dataApiIbge = apiAnswer;
     console.log('IBGE API ready to use')
 })
-
 class IbgeController{
 
     _allCities;
@@ -31,6 +30,7 @@ class IbgeController{
 
     async searchCityForUf(queries){
         const {uf} = queries;
+        await this.findErrorUf(uf)
         await this.cleanData();
         const cities = this.allCities;
         const citiesFound = await cities.filter(city =>{
@@ -40,7 +40,6 @@ class IbgeController{
             }
             return dataAsked;
         })
-        await this.findErrorUf(uf)
         return citiesFound;
     } 
 
@@ -52,7 +51,7 @@ class IbgeController{
             let dataAsked;
             const cityNameLowCase = (city.name.toLowerCase());
             const nameReceveid = name.toLowerCase();
-            if(cityNameLowCase == nameReceveid){
+            if(cityNameLowCase.includes(nameReceveid)){
                 dataAsked = city;
             }
             return dataAsked;
@@ -68,7 +67,7 @@ class IbgeController{
             let dataAsked;
             const cityRegionLowCase = (city.region.toLowerCase()).replace('-', ' ');;
             const regionReceveid = region.toLowerCase().replace('-', ' ');
-            if(cityRegionLowCase == regionReceveid){
+            if(cityRegionLowCase.includes(regionReceveid)){
                 dataAsked = city;
             }
             return dataAsked;
@@ -84,7 +83,7 @@ class IbgeController{
             let dataAsked;
             const cityStateLowCase = (city.state.toLowerCase());
             const stateReceveid = state.toLowerCase();
-            if(cityStateLowCase == stateReceveid){
+            if(cityStateLowCase.includes(stateReceveid)){
                 dataAsked = city;
             }
             return dataAsked;

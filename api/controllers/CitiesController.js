@@ -1,6 +1,6 @@
 const ibgeController = require("./IbgeController")
 const CitiesNotFound = require('../errors/CitiesNotFound')
-const UfLowCase = require('../errors/UfLowCase')
+const UfLowCaseError = require('../errors/UfLowCase')
 const UfLengthError = require('../errors/UfLengthError')
 
 class CitiesController {
@@ -12,9 +12,10 @@ class CitiesController {
             return res.status(200).send(data);
         }catch(error){
             let status = 500;
+            console.error(error)
             if(error instanceof CitiesNotFound){
                 status = 404;
-            }else if (error instanceof UfLowCase || UfLengthError){
+            }else if (error instanceof UfLowCaseError || UfLengthError){
                 status = 400
             }
             return res.status(status).json({message: error.message})
