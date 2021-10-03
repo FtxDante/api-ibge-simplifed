@@ -12,7 +12,6 @@ class CitiesController {
             return res.status(200).json(data);
         }catch(error){
             let status = 500;
-            console.error(error)
             if(error instanceof CitiesNotFound){
                 status = 404;
             }else if (error instanceof UfLowCaseError || UfLengthError){
@@ -25,13 +24,13 @@ class CitiesController {
     static async searchByQueries(queries){
         let data;
         if(queries.hasOwnProperty('uf')){
-            data = await ibgeController.searchCityForUf(queries);
+            data = await ibgeController.searchCityByUf(queries);
         }else if(queries.hasOwnProperty('name')){
-            data = await ibgeController.searchForCityName(queries);
+            data = await ibgeController.searchCityByName(queries);
         }else if(queries.hasOwnProperty('region')){
-            data = await ibgeController.searchForCityRegion(queries);
+            data = await ibgeController.searchCityByRegion(queries);
         }else if(queries.hasOwnProperty('state')){
-            data = await ibgeController.searchCityForState(queries);
+            data = await ibgeController.searchCityByState(queries);
         }else{
             data = await ibgeController.searchAllCities();
         }

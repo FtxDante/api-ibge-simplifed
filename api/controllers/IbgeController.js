@@ -28,65 +28,57 @@ class IbgeController{
         }
     }
 
-    async searchCityForUf(queries){
+    async searchCityByUf(queries){
         const {uf} = queries;
         await this.findErrorUf(uf)
         await this.cleanData();
         const cities = this.allCities;
         const citiesFound = await cities.filter(city =>{
-            let dataAsked;
             if(city.uf == uf){
-                dataAsked = city;
+                return city;
             }
-            return dataAsked;
         })
         return citiesFound;
     } 
 
-    async searchForCityName(queries){
+    async searchCityByName(queries){
         const {name} = queries;
         await this.cleanData();
         const cities = this.allCities;
         const citiesFound = await cities.filter(city =>{
-            let dataAsked;
             const cityNameLowCase = (city.name.toLowerCase());
             const nameReceveid = name.toLowerCase();
             if(cityNameLowCase.includes(nameReceveid)){
-                dataAsked = city;
+                return city;
             }
-            return dataAsked;
         })
         return citiesFound;
     }
 
-    async searchForCityRegion(queries){
+    async searchCityByRegion(queries){
         const {region} = queries;
         await this.cleanData();
         const cities = this.allCities;
         const citiesFound = await cities.filter(city =>{
-            let dataAsked;
             const cityRegionLowCase = (city.region.toLowerCase()).replace('-', ' ');;
             const regionReceveid = region.toLowerCase().replace('-', ' ');
             if(cityRegionLowCase.includes(regionReceveid)){
-                dataAsked = city;
+                return city;
             }
-            return dataAsked;
         })
         return citiesFound;
     }
 
-    async searchCityForState(queries){
+    async searchCityByState(queries){
         const {state} = queries;
         await this.cleanData();
         const cities = this.allCities;
         const citiesFound = await cities.filter(city =>{
-            let dataAsked;
             const cityStateLowCase = (city.state.toLowerCase());
             const stateReceveid = state.toLowerCase();
             if(cityStateLowCase.includes(stateReceveid)){
-                dataAsked = city;
+                return city;
             }
-            return dataAsked;
         })
         return citiesFound;
     }
