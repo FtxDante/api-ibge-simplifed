@@ -8,7 +8,7 @@ class CitiesController {
         const queries = req.query;
         try{
             let data =  await CitiesController.searchByQueries(queries);
-            await CitiesController.handleError404(data);
+            await ibgeController.handleError404(data);
             return res.status(200).json(data);
         }catch(error){
             let status = 500;
@@ -23,13 +23,19 @@ class CitiesController {
 
     static async searchByQueries(queries){
         let data;
-        if(queries.hasOwnProperty('uf')){
+        const hasUf = queries.hasOwnProperty('uf');
+        const hasName = queries.hasOwnProperty('name');
+        const hasRegion = queries.hasOwnProperty('region');
+        const hasState = queries.hasOwnProperty('state');
+        if(hasUf && hasName && hasRegion){
+            data = await ibgeController.searchCityByUfNameAndRegion(queries)
+        }else if(hasUf){
             data = await ibgeController.searchCityByUf(queries);
-        }else if(queries.hasOwnProperty('name')){
+        }else if(hasName){
             data = await ibgeController.searchCityByName(queries);
-        }else if(queries.hasOwnProperty('region')){
+        }else if(hasRegion){
             data = await ibgeController.searchCityByRegion(queries);
-        }else if(queries.hasOwnProperty('state')){
+        }else if(hasState){
             data = await ibgeController.searchCityByState(queries);
         }else{
             data = await ibgeController.searchAllCities();
@@ -37,11 +43,7 @@ class CitiesController {
         return data;
     }
     
-    static async handleError404(data){
-        if(data.length == 0){
-            throw new CitiesNotFound()
-        }
-    }
+   
 }
 
 module.exports = CitiesController; 

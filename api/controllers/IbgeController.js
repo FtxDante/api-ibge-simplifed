@@ -1,6 +1,7 @@
 const callAxios = require('../services/callAxiosService')
 const UfLowCase = require('../errors/UfLowCase')
 const UfLengthError = require('../errors/UfLengthError')
+const CitiesNotFound = require('../errors/CitiesNotFound')
 let dataApiIbge;
 callAxios().then(apiAnswer =>{
     dataApiIbge = apiAnswer;
@@ -28,12 +29,27 @@ class IbgeController{
         }
     }
 
+    async searchCityByUfNameAndRegion(queries){
+        await this.cleanData();
+        const {uf, name, region} = queries;
+        await this.findErrorUf(uf)
+        const citiesFound = await this.allCities.filter(city =>{
+            const cityNameLowCase = (city.name.toLowerCase());
+            const nameReceveid = name.toLowerCase();
+            const cityRegionLowCase = (city.region.toLowerCase()).replace('-', ' ');;
+            const regionReceveid = region.toLowerCase().replace('-', ' ');
+            if(city.uf == uf && cityNameLowCase.includes(nameReceveid) && cityRegionLowCase.includes(regionReceveid)){
+                return city;
+            }
+        })
+        return citiesFound;
+    } 
+
     async searchCityByUf(queries){
+        await this.cleanData();
         const {uf} = queries;
         await this.findErrorUf(uf)
-        await this.cleanData();
-        const cities = this.allCities;
-        const citiesFound = await cities.filter(city =>{
+        const citiesFound = await this.allCities.filter(city =>{
             if(city.uf == uf){
                 return city;
             }
@@ -42,10 +58,9 @@ class IbgeController{
     } 
 
     async searchCityByName(queries){
-        const {name} = queries;
         await this.cleanData();
-        const cities = this.allCities;
-        const citiesFound = await cities.filter(city =>{
+        const {name} = queries;
+        const citiesFound = await this.allCities.filter(city =>{
             const cityNameLowCase = (city.name.toLowerCase());
             const nameReceveid = name.toLowerCase();
             if(cityNameLowCase.includes(nameReceveid)){
@@ -56,10 +71,9 @@ class IbgeController{
     }
 
     async searchCityByRegion(queries){
-        const {region} = queries;
         await this.cleanData();
-        const cities = this.allCities;
-        const citiesFound = await cities.filter(city =>{
+        const {region} = queries;
+        const citiesFound = await this.allCities.filter(city =>{
             const cityRegionLowCase = (city.region.toLowerCase()).replace('-', ' ');;
             const regionReceveid = region.toLowerCase().replace('-', ' ');
             if(cityRegionLowCase.includes(regionReceveid)){
@@ -70,10 +84,9 @@ class IbgeController{
     }
 
     async searchCityByState(queries){
-        const {state} = queries;
         await this.cleanData();
-        const cities = this.allCities;
-        const citiesFound = await cities.filter(city =>{
+        const {state} = queries;
+        const citiesFound = await this.allCities.filter(city =>{
             const cityStateLowCase = (city.state.toLowerCase());
             const stateReceveid = state.toLowerCase();
             if(cityStateLowCase.includes(stateReceveid)){
@@ -96,6 +109,12 @@ class IbgeController{
             throw new UfLengthError()
         }
     } 
+
+    async handleError404(data){
+        if(data.length == 0){
+            throw new CitiesNotFound()
+        }
+    }
 
     get allCities(){
         return this._allCities;
