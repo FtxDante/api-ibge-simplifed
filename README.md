@@ -30,7 +30,7 @@ npm start
 
 :warning: OBS: para parar o servidor é só pressionar **CTRL + C** no terminal
 
-#### Pronto, o servidor está pronto para uso! :happy:
+#### Pronto, o servidor está pronto para uso!
 
 ## Como usar o servidor :large_blue_circle:
 
