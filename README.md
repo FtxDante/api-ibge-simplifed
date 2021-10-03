@@ -75,9 +75,9 @@ OBS: Pesquisa por partes, mas respeita acentos.
 * Pesquisar cidades por região:
 
 ```http
-localhost:3000/api/city?region=[NOME ESTADO]
+localhost:3000/api/city?region=[REGIAO]
 Exemplo:
-localhost:3000/api/city?region=CEARÁ
+localhost:3000/api/city?region=SUL
 OBS: Pesquisa por partes, mas respeita acentos.
 ```
 
